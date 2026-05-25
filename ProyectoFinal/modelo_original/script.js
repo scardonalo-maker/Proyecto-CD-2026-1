@@ -22,6 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
+                    metodo: document.getElementById("metodo").value,
+                    
                     edad,
                     genero,
                     departamento,
