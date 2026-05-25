@@ -4,14 +4,19 @@ import joblib, numpy as np, pandas as pd
 
 app = Flask(__name__)
 CORS(app)
-model = joblib.load('modelo.pkl')
-scaler = joblib.load('scaler.pkl')
+
+knn_model = joblib.load('knn_modelo.pkl')
+knn_scaler = joblib.load('knn_scaler.pkl')
+
+mlp_model = joblib.load('mlp_modelo.pkl')
+mlp_scaler = joblib.load('mlp_scaler.pkl')
 
 CLASSES = ['Sin depresión', 'Con depresión']
 
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
+    metodo = data['metodo']
 
     departamento = data['departamento']
     if isinstance(departamento, str):
@@ -37,8 +42,27 @@ def predict():
                  'Department_medical', 'Department_science'])
 
     features = scaler.transform(features)
-    pred = int(model.predict(features)[0])
-    proba = model.predict_proba(features)[0]
+   if metodo == "knn":
+
+    features_scaled = knn_scaler.transform(features)
+
+    pred = int(knn_model.predict(features_scaled)[0])
+
+    proba = knn_model.predict_proba(features_scaled)[0]
+
+elif metodo == "mlp":
+
+    features_scaled = mlp_scaler.transform(features)
+
+    pred = int(mlp_model.predict(features_scaled)[0])
+
+    proba = mlp_model.predict_proba(features_scaled)[0]
+
+else:
+
+    return jsonify({
+        'error': 'Método no válido'
+    }), 400
 
     return jsonify({
         'prediccion': CLASSES[pred],
