@@ -39,11 +39,8 @@ ProyectoFinal/
 │   ├── script.js
 │   ├── style.css
 │   └── modelo\_smote.ipynb
-
 │
-
 ├── student\_lifestyle\_100k.csv 
-
 │
 └── README.md
 ```
