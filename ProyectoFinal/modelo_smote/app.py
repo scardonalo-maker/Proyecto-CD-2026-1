@@ -62,7 +62,7 @@ else:
     return jsonify({
         'error': 'Método no válido'
     }), 400
- return jsonify({
+    return jsonify({
         'prediccion': CLASSES[pred],
         'probabilidad': round(float(max(proba)), 4)
     })
