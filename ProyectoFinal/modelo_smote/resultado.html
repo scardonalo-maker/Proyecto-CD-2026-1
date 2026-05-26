@@ -11,9 +11,13 @@
 <div class="container mt-5 text-center">
     <div class="card p-4 shadow">
 
-        <h2>Resultado de la Predicción</h2>
+        <h2>Resultado de la Predicción (Modelo balanceado)</h2>
 
-        <h1 id="resultado" class="mt-4"></h1>
+        <h5 class="mt-4">KNN</h5>
+        <h3 id="resultado-knn"></h3>
+
+        <h5 class="mt-4">MLP</h5>
+        <h3 id="resultado-mlp"></h3>
 
         <a href="index.html" class="btn btn-secondary mt-3">Volver</a>
 
@@ -21,18 +25,8 @@
 </div>
 
 <script>
-    let resultado = localStorage.getItem("prediccion");
-    let probabilidad = parseFloat(localStorage.getItem("probabilidad"));
-
-    let texto = document.getElementById("resultado");
-
-    if(resultado === "Con depresión") {
-        texto.innerHTML = "⚠️ Posible Depresión <br> (" + (probabilidad * 100).toFixed(2) + "% de probabilidad)";
-        texto.classList.add("text-danger");
-    } else {
-        texto.innerHTML = "✅ No presenta depresión <br> (" + (probabilidad * 100).toFixed(2) + "% de probabilidad)";
-        texto.classList.add("text-success");
-    }
+    document.getElementById("resultado-knn").innerText = localStorage.getItem("knn_prediccion") + " (" + (parseFloat(localStorage.getItem("knn_probabilidad")) * 100).toFixed(2) + "%)";
+    document.getElementById("resultado-mlp").innerText = localStorage.getItem("mlp_prediccion") + " (" + (parseFloat(localStorage.getItem("mlp_probabilidad")) * 100).toFixed(2) + "%)";
 </script>
 
 </body>
