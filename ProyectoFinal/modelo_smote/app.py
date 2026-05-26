@@ -15,6 +15,7 @@ CLASSES = ['Sin depresión', 'Con depresión']
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
+    metodo = data['metodo']
 
     departamento = data['departamento']
     if isinstance(departamento, str):
