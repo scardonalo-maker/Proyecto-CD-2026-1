@@ -41,12 +41,24 @@ def predict():
                  'Department_medical', 'Department_science'])
 
     features = scaler.transform(features)
-    pred = int(model.predict(features)[0])
-    proba = model.predict_proba(features)[0]
+    if metodo == "knn":
+
+    features_scaled = knn_scaler.transform(features)
+
+    pred = int(knn_model.predict(features_scaled)[0])
+
+    proba = knn_model.predict_proba(features_scaled)[0]
+
+elif metodo == "mlp":
+
+    features_scaled = mlp_scaler.transform(features)
+
+    pred = int(mlp_model.predict(features_scaled)[0])
+
+    proba = mlp_model.predict_proba(features_scaled)[0]
+
+else:
 
     return jsonify({
-        'prediccion': CLASSES[pred],
-        'probabilidad': round(float(max(proba)), 4)
-    })
-if __name__== '__main__':
-    app.run(debug=True, port=5000)
+        'error': 'Método no válido'
+    }), 400
