@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    metodo: document.getElementById("metodo").value,
                     
                     edad,
                     genero,
@@ -42,11 +41,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let data = await response.json();
 
-            console.log("Predicción:", data.prediccion);
-
             // Guardar resultado
-            localStorage.setItem("prediccion", data.prediccion);
-            localStorage.setItem("probabilidad", data.probabilidad);
+            localStorage.setItem("knn_prediccion", data.knn.prediccion);
+            localStorage.setItem("knn_probabilidad", data.knn.probabilidad);
+            localStorage.setItem("mlp_prediccion", data.mlp.prediccion);
+            localStorage.setItem("mlp_probabilidad", data.mlp.probabilidad);
             // Redirigir
             window.location.href = "resultado.html";
 

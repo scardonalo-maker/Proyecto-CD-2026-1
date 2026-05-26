@@ -16,7 +16,6 @@ CLASSES = ['Sin depresión', 'Con depresión']
 @app.route('/predict', methods=['POST'])
 def predict():
     data = request.get_json()
-    metodo = data['metodo']
 
     departamento = data['departamento']
     if isinstance(departamento, str):
@@ -41,32 +40,26 @@ def predict():
                  'Department_arts', 'Department_business', 'Department_engineering',
                  'Department_medical', 'Department_science'])
 
-    features = scaler.transform(features)
-   if metodo == "knn":
+    # KNN
+    knn_features = knn_scaler.transform(features)
+    knn_pred = int(knn_model.predict(knn_features)[0])
+    knn_proba = knn_model.predict_proba(knn_features)[0]
 
-    features_scaled = knn_scaler.transform(features)
-
-    pred = int(knn_model.predict(features_scaled)[0])
-
-    proba = knn_model.predict_proba(features_scaled)[0]
-
-elif metodo == "mlp":
-
-    features_scaled = mlp_scaler.transform(features)
-
-    pred = int(mlp_model.predict(features_scaled)[0])
-
-    proba = mlp_model.predict_proba(features_scaled)[0]
-
-else:
+    # MLP
+    mlp_features = mlp_scaler.transform(features)
+    mlp_pred = int(mlp_model.predict(mlp_features)[0])
+    mlp_proba = mlp_model.predict_proba(mlp_features)[0]
 
     return jsonify({
-        'error': 'Método no válido'
-    }), 400
-
-    return jsonify({
-        'prediccion': CLASSES[pred],
-        'probabilidad': round(float(max(proba)), 4)
+        'knn': {
+            'prediccion': CLASSES[knn_pred],
+            'probabilidad': round(float(max(knn_proba)), 4)
+        },
+        'mlp': {
+            'prediccion': CLASSES[mlp_pred],
+            'probabilidad': round(float(max(mlp_proba)), 4)
+        }
     })
-if __name__== '__main__':
+
+if __name__ == '__main__':
     app.run(debug=True, port=5000)
