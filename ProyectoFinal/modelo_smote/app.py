@@ -4,8 +4,11 @@ import joblib, numpy as np, pandas as pd
 
 app = Flask(__name__)
 CORS(app)
-model = joblib.load('modelo_smote.pkl')
-scaler = joblib.load('scaler_smote.pkl')
+knn_model = joblib.load('modelo_smote_knn.pkl')
+knn_scaler = joblib.load('scaler_smote_knn.pkl')
+
+mlp_model = joblib.load('modelo_smote_mlp.pkl')
+mlp_scaler = joblib.load('scaler_smote_mlp.pkl')
 
 CLASSES = ['Sin depresión', 'Con depresión']
 
