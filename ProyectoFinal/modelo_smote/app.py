@@ -62,3 +62,9 @@ else:
     return jsonify({
         'error': 'Método no válido'
     }), 400
+ return jsonify({
+        'prediccion': CLASSES[pred],
+        'probabilidad': round(float(max(proba)), 4)
+    })
+if __name__== '__main__':
+    app.run(debug=True, port=5000)
